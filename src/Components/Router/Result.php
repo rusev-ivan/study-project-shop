@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Shop\Http\Router;
+namespace Shop\Components\Router;
 
 
 class Result

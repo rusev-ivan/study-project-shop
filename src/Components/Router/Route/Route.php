@@ -1,11 +1,11 @@
 <?php
 
 
-namespace Shop\Http\Router\Route;
+namespace Shop\Components\Router\Route;
 
 
 use Psr\Http\Message\ServerRequestInterface;
-use Shop\Http\Router\Result;
+use Shop\Components\Router\Result;
 
 interface Route
 {

@@ -1,0 +1,58 @@
+1. middleware, validator, event dispatcher, kernel, dependency-injection-container, data-mapper + dbal (connection + query-builder) + orm + entity-manager
+
+// new, delete
+persist($object), flush()
+
+2.
+
+// callback: paid => true, order_id => 43242
+// $order = Order::find($orderId);
+// $order->execute();
+// $dispatcher->dispatch(new OrderPaid($orderId)); get_class($event);
+// ..
+// ..
+// ..
+// ..
+// ..
+
+// GRASP: low coupling/high cohesion
+
+AMQP: producer -> publish(message) <queue>  <- consumer
+RabbitMQ, Apache Kafka, Gerkin
+
+interface UnderValidation
+{
+   public function rules(): array;
+}
+
+final class UserRegisterDto implements UnderValidation
+{
+    public function rules()
+    {
+       return  [
+          'name' => [
+            function ($value) {
+             if (mb_strlen($value) > 256) {
+                 return Result::err('Имя слишком длинное');
+             }
+
+             return Result::ok();
+         },
+         ]
+      ]
+    }
+}
+
+$errorCollection = $validator->validate(['name' => 'John'], new UserRegisterDto());
+
+// $rules = $toValidate;
+
+if ($toValidate instanceof UnderValidation ) {
+   $rules = $toValidate->rules();
+}
+
+if (! $errorCollection->isEmpty()) {
+   return new JsonResponse($errorCollection->toArray());
+}
+
+//

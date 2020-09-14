@@ -2,7 +2,6 @@
 
 namespace Shop\App\Http\Controllers\Product;
 
-
 use Laminas\Diactoros\Response\HtmlResponse;
 
 final class IndexController
@@ -11,5 +10,4 @@ final class IndexController
     {
         return new HtmlResponse('Все товары');
     }
-
 }

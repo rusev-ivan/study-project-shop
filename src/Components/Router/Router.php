@@ -1,10 +1,10 @@
 <?php
 
-namespace Shop\Http\Router;
+namespace Shop\Components\Router;
 
 use Psr\Http\Message\ServerRequestInterface;
-use Shop\Http\Router\Exception\RequestNotMatchedException;
-use Shop\Http\Router\Exception\RouteNotFoundException;
+use Shop\Components\Router\Exception\RequestNotMatchedException;
+use Shop\Components\Router\Exception\RouteNotFoundException;
 
 class Router
 {

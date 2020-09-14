@@ -1,9 +1,9 @@
 <?php
 
-namespace Shop\Http\Router;
+namespace Shop\Components\Router;
 
-use Shop\Http\Router\Route\RegexpRoute;
-use Shop\Http\Router\Route\Route;
+use Shop\Components\Router\Route\RegexpRoute;
+use Shop\Components\Router\Route\Route;
 
 class RouteCollection
 {

@@ -6,10 +6,10 @@ use Shop\App\Http\Controllers\EnterController;
 use Shop\App\Http\Controllers\Product\IndexController;
 use Shop\App\Http\Controllers\Product\ShowController;
 use Shop\Http\ResponseSender;
-use Shop\Http\Router\ControllerResolver;
-use Shop\Http\Router\Exception\RequestNotMatchedException;
-use Shop\Http\Router\RouteCollection;
-use Shop\Http\Router\Router;
+use Shop\Components\Router\ControllerResolver;
+use Shop\Components\Router\Exception\RequestNotMatchedException;
+use Shop\Components\Router\RouteCollection;
+use Shop\Components\Router\Router;
 
 require __DIR__ . '/../vendor/autoload.php';
 
@@ -31,7 +31,6 @@ try {
 } catch (RequestNotMatchedException $e){
     $response = new HtmlResponse('Undefined page', 404);
 }
-
 $response = $response->withHeader('X-Developer', 'Rusev');
 
 ### Sending
