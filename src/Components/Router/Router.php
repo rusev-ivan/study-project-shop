@@ -6,7 +6,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Shop\Components\Router\Exception\RequestNotMatchedException;
 use Shop\Components\Router\Exception\RouteNotFoundException;
 
-class Router
+final class Router
 {
     private $routes;
 

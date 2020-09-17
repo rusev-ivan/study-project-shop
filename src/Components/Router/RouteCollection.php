@@ -5,7 +5,7 @@ namespace Shop\Components\Router;
 use Shop\Components\Router\Route\RegexpRoute;
 use Shop\Components\Router\Route\Route;
 
-class RouteCollection
+final class RouteCollection
 {
     private $routes = [];
 

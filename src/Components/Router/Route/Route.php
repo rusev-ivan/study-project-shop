@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Shop\Components\Router\Route;
-
 
 use Psr\Http\Message\ServerRequestInterface;
 use Shop\Components\Router\Result;

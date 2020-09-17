@@ -1,10 +1,8 @@
 <?php
 
-
 namespace Shop\Components\Router;
 
-
-class Result
+final class Result
 {
     private $name;
     private $handler;
