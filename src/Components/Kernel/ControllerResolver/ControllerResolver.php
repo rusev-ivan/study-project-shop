@@ -76,7 +76,6 @@ final class ControllerResolver
                 )
             );
         }
-
         throw new \RuntimeException();
     }
 }
