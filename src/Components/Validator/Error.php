@@ -12,7 +12,6 @@ final class Error
         return $this;
     }
 
-
     public function isEmpty()
     {
         if (empty($this->message)){

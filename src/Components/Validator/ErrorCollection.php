@@ -4,15 +4,20 @@ namespace Shop\Components\Validator;
 
 final class ErrorCollection
 {
-        private $errors;
+    private $errors;
 
-        public function addError(Error $error)
-        {
-            $this->errors[] = $error;
-        }
+    public function __construct(array $errors = [])
+    {
+        $this->errors = $errors;
+    }
 
-        public function getErrors()
-        {
-            return $this->errors;
-        }
+    public function isEmpty()
+    {
+        return 0 >= count($this->errors);
+    }
+
+    public function getErrors()
+    {
+        return $this->errors;
+    }
 }
