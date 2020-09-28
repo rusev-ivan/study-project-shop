@@ -3,12 +3,12 @@
 namespace Shop\Components\Validator\Tests;
 
 use PHPUnit\Framework\TestCase;
-use Shop\Components\Validator\Rules\LengthMin;
-use Shop\Components\Validator\Rules\Required;
+use Shop\Components\Validator\Rules\In;
+use Shop\Components\Validator\Rules\NotIn;
 use Shop\Components\Validator\ValidationScope;
 use Shop\Components\Validator\Validator;
 
-class RequiredTest extends TestCase
+final class InNotInTest extends TestCase
 {
     private $validator;
 
@@ -18,44 +18,27 @@ class RequiredTest extends TestCase
         $this->validator = new Validator();
     }
 
-    public function testThatRequiredRuleWorkAsExcepted(): void
+    public function testIn()
     {
         $data = [
-            'age' => 25
+            'gender' => 'dsfsd'
         ];
         $toValidate = [
-            'name' => [
-                new Required(),
-                new LengthMin(20),
+            'gender' => [
+                new In('male', 'female'),
             ]
         ];
         $errorCollection = $this->validator->validate($data, ValidationScope::fromArray($toValidate));
 
-        self::assertEquals('No value passed for field' , $errorCollection->getErrors()['name']);
+        self::assertEquals('Знвчение "dsfsd" отсутствует в списке допустимых' , $errorCollection->getErrors()['gender']);
         self::assertFalse($errorCollection->isEmpty());
 
         $data = [
-            'age' => 25
+            'gender' => 'male'
         ];
         $toValidate = [
-            'name' => [
-                new LengthMin(20),
-                new Required(),
-            ]
-        ];
-        $errorCollection = $this->validator->validate($data, ValidationScope::fromArray($toValidate));
-
-        self::assertEquals('No value passed for field' , $errorCollection->getErrors()['name']);
-        self::assertFalse($errorCollection->isEmpty());
-
-        $data = [
-            'age' => 25,
-            'name' => 'Jhon'
-        ];
-        $toValidate = [
-            'name' => [
-                new LengthMin(2),
-                new Required(),
+            'gender' => [
+                new In('male', 'female'),
             ]
         ];
         $errorCollection = $this->validator->validate($data, ValidationScope::fromArray($toValidate));
@@ -64,5 +47,32 @@ class RequiredTest extends TestCase
         self::assertEmpty($errorCollection->getErrors());
     }
 
+    public function testNotIn()
+    {
+        $data = [
+            'name' => 'Karl'
+        ];
+        $toValidate = [
+            'name' => [
+                new NotIn('Karl', 'Jhon'),
+            ]
+        ];
+        $errorCollection = $this->validator->validate($data, ValidationScope::fromArray($toValidate));
 
+        self::assertEquals('Знвчение "Karl" есть в списке недоступных' , $errorCollection->getErrors()['name']);
+        self::assertFalse($errorCollection->isEmpty());
+
+        $data = [
+            'name' => 'Vasya'
+        ];
+        $toValidate = [
+            'name' => [
+                new NotIn('Karl', 'Jhon'),
+            ]
+        ];
+        $errorCollection = $this->validator->validate($data, ValidationScope::fromArray($toValidate));
+
+        self::assertTrue($errorCollection->isEmpty());
+        self::assertEmpty($errorCollection->getErrors());
+    }
 }

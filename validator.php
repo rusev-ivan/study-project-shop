@@ -4,8 +4,8 @@ use Shop\Components\Validator\Rules\Email;
 use Shop\Components\Validator\Rules\Gt;
 use Shop\Components\Validator\Rules\Gte;
 use Shop\Components\Validator\Rules\In;
-use Shop\Components\Validator\Rules\Max;
-use Shop\Components\Validator\Rules\Min;
+use Shop\Components\Validator\Rules\LengthMax;
+use Shop\Components\Validator\Rules\LengthMin;
 use Shop\Components\Validator\Rules\NotIn;
 use Shop\Components\Validator\Rules\Required;
 use Shop\Components\Validator\ValidationScope;
@@ -20,8 +20,8 @@ $data = [
 ];
 $toValidate = [
     'name' => [
-        new Min(5),
-        new Max(10),
+        new LengthMin(5),
+        new LengthMax(10),
         new Required(),
     ],
 

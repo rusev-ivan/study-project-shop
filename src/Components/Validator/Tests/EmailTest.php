@@ -3,12 +3,11 @@
 namespace Shop\Components\Validator\Tests;
 
 use PHPUnit\Framework\TestCase;
-use Shop\Components\Validator\Rules\LengthMin;
-use Shop\Components\Validator\Rules\Required;
+use Shop\Components\Validator\Rules\Email;
 use Shop\Components\Validator\ValidationScope;
 use Shop\Components\Validator\Validator;
 
-class RequiredTest extends TestCase
+final class EmailTest extends TestCase
 {
     private $validator;
 
@@ -18,44 +17,40 @@ class RequiredTest extends TestCase
         $this->validator = new Validator();
     }
 
-    public function testThatRequiredRuleWorkAsExcepted(): void
+    public function testEmailValidation()
     {
         $data = [
-            'age' => 25
+            'email' => 'v_rusevmail.ru'
         ];
         $toValidate = [
-            'name' => [
-                new Required(),
-                new LengthMin(20),
+            'email' => [
+                new Email(),
             ]
         ];
         $errorCollection = $this->validator->validate($data, ValidationScope::fromArray($toValidate));
 
-        self::assertEquals('No value passed for field' , $errorCollection->getErrors()['name']);
+        self::assertEquals('Email адрес указан неверно' , $errorCollection->getErrors()['email']);
         self::assertFalse($errorCollection->isEmpty());
 
         $data = [
-            'age' => 25
+            'email' => 'v_rusevmail.ru'
         ];
         $toValidate = [
-            'name' => [
-                new LengthMin(20),
-                new Required(),
+            'email' => [
+                new Email('Ошибка Email'),
             ]
         ];
         $errorCollection = $this->validator->validate($data, ValidationScope::fromArray($toValidate));
 
-        self::assertEquals('No value passed for field' , $errorCollection->getErrors()['name']);
+        self::assertEquals('Ошибка Email' , $errorCollection->getErrors()['email']);
         self::assertFalse($errorCollection->isEmpty());
 
         $data = [
-            'age' => 25,
-            'name' => 'Jhon'
+            'email' => 'v_rusev@mail.ru'
         ];
         $toValidate = [
-            'name' => [
-                new LengthMin(2),
-                new Required(),
+            'email' => [
+                new Email(),
             ]
         ];
         $errorCollection = $this->validator->validate($data, ValidationScope::fromArray($toValidate));
@@ -63,6 +58,4 @@ class RequiredTest extends TestCase
         self::assertTrue($errorCollection->isEmpty());
         self::assertEmpty($errorCollection->getErrors());
     }
-
-
 }

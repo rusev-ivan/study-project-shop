@@ -3,12 +3,12 @@
 namespace Shop\Components\Validator\Tests;
 
 use PHPUnit\Framework\TestCase;
+use Shop\Components\Validator\Rules\LengthMax;
 use Shop\Components\Validator\Rules\LengthMin;
-use Shop\Components\Validator\Rules\Required;
 use Shop\Components\Validator\ValidationScope;
 use Shop\Components\Validator\Validator;
 
-class RequiredTest extends TestCase
+final class LengthTest extends TestCase
 {
     private $validator;
 
@@ -18,44 +18,27 @@ class RequiredTest extends TestCase
         $this->validator = new Validator();
     }
 
-    public function testThatRequiredRuleWorkAsExcepted(): void
+    public function testLengthMin()
     {
         $data = [
-            'age' => 25
+            'name' => 'John'
         ];
         $toValidate = [
             'name' => [
-                new Required(),
-                new LengthMin(20),
+                new LengthMin(5),
             ]
         ];
         $errorCollection = $this->validator->validate($data, ValidationScope::fromArray($toValidate));
 
-        self::assertEquals('No value passed for field' , $errorCollection->getErrors()['name']);
+        self::assertEquals('Число символов не должно быть меньше, чем 5' , $errorCollection->getErrors()['name']);
         self::assertFalse($errorCollection->isEmpty());
 
         $data = [
-            'age' => 25
+            'name' => 'Selvestr'
         ];
         $toValidate = [
             'name' => [
-                new LengthMin(20),
-                new Required(),
-            ]
-        ];
-        $errorCollection = $this->validator->validate($data, ValidationScope::fromArray($toValidate));
-
-        self::assertEquals('No value passed for field' , $errorCollection->getErrors()['name']);
-        self::assertFalse($errorCollection->isEmpty());
-
-        $data = [
-            'age' => 25,
-            'name' => 'Jhon'
-        ];
-        $toValidate = [
-            'name' => [
-                new LengthMin(2),
-                new Required(),
+                new LengthMin(5),
             ]
         ];
         $errorCollection = $this->validator->validate($data, ValidationScope::fromArray($toValidate));
@@ -64,5 +47,32 @@ class RequiredTest extends TestCase
         self::assertEmpty($errorCollection->getErrors());
     }
 
+    public function testLengthMax()
+    {
+        $data = [
+            'name' => 'Selvestr'
+        ];
+        $toValidate = [
+            'name' => [
+                new LengthMax(5),
+            ]
+        ];
+        $errorCollection = $this->validator->validate($data, ValidationScope::fromArray($toValidate));
 
+        self::assertEquals('Число символов не должно быть больше, чем 5' , $errorCollection->getErrors()['name']);
+        self::assertFalse($errorCollection->isEmpty());
+
+        $data = [
+            'name' => 'John'
+        ];
+        $toValidate = [
+            'name' => [
+                new LengthMax(5),
+            ]
+        ];
+        $errorCollection = $this->validator->validate($data, ValidationScope::fromArray($toValidate));
+
+        self::assertTrue($errorCollection->isEmpty());
+        self::assertEmpty($errorCollection->getErrors());
+    }
 }
