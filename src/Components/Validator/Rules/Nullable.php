@@ -10,7 +10,8 @@ final class Nullable implements Rule
     public function __invoke(array $data, string $field): Result
     {
         return new Result(
-            sprintf('Email адрес %s указан неверно', $data[$field])
+            null === $data[$field],
+            sprintf('поле "%s" не пустое', $data[$field])
         );
     }
 }
